@@ -713,11 +713,7 @@ static PyTypeObject __pyx_CyFunctionType_type = {
     __pyx_CyFunction_methods,           /*tp_methods*/
     __pyx_CyFunction_members,           /*tp_members*/
     __pyx_CyFunction_getsets,           /*tp_getset*/
-#if PY_VERSION_HEX < 0x030A0000
     0,                                  /*tp_base*/
-#else
-    &PyCFunction_Type,                  /*tp_base*/
-#endif
     0,                                  /*tp_dict*/
     __Pyx_CyFunction_descr_get,         /*tp_descr_get*/
     0,                                  /*tp_descr_set*/
@@ -750,6 +746,9 @@ static PyTypeObject __pyx_CyFunctionType_type = {
 
 
 static int __pyx_CyFunction_init(void) {
+#if PY_VERSION_HEX >= 0x030A0000
+    __pyx_CyFunctionType_type.tp_base = &PyCFunction_Type;
+#endif
     __pyx_CyFunctionType = __Pyx_FetchCommonType(&__pyx_CyFunctionType_type);
     if (unlikely(__pyx_CyFunctionType == NULL)) {
         return -1;
